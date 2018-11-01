@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <script>
+            class Student {
+                constructor(name, subject, year) {
+                    this.name = name;
+                    this.subject = subject;
+                    this.year = year;
+                    this.marks = [];
+                }
+
+                addExamResult(mark) {
+                    this.marks.push(mark);
+                }
+
+                average() {
+                    if (this.marks.length === 0) {
+                        return 0;
+                    }
+
+                    let total = 0;
+                    for (let mark of this.marks) {
+                        total += mark;
+                    }
+                    return total / this.marks.length;
+                }
+
+                toString() {
+                    return `${this.name} studying ${this.subject} in year ${this.year} with an average of ${this.average()}`;
+                }
+            }
+
+            function doExercise() {
+                const student = new Student("Pete", "History", 3);
+                student.addExamResult(56);
+                student.addExamResult(64);
+                student.addExamResult(72);
+                student.addExamResult(81);
+
+                //Should display 'Pete studying history in year 3 with an average of 68.25'
+                const node = document.getElementById('result');
+                node.innerHTML = student.toString();
+            }
+        </script>
+    </head>
+    <body  onload="doExercise();">
+        <h2>Student Details Should Appear Below:</h2>
+        <output id="result"></output>
+    </body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ES6</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css">
+    <!-- Babel Transcompiler - in the real world you would use webpack
+         or other build tool to transcompile your ES6, JSX etc... -->
+    <script src="babel-standalone/babel.js"></script>
+    <script>
+        function printTitle(title) {
+            var content = document.getElementById("content");
+            var newNode = document.createElement("h3");
+            newNode.appendChild(document.createTextNode(title));
+            content.appendChild(newNode);
+        }
+        function print(text) {
+            var content = document.getElementById("content");
+            var newNode = document.createElement("output");
+            newNode.appendChild(document.createTextNode(text));
+            content.appendChild(newNode);
+        }
+    </script>
+    <script type="text/babel" data-presets="es2016,stage-2">
+        function demo() {
+            class Employee {
+                constructor(name, department, salary) {
+                    this.name = name;
+                    this.department = department;
+                    this.salary = salary;
+                }
+
+                get description() {
+                    return `${this.name} working in ${this.department} earning ${this.salary}`;
+                }
+            }
+
+            let employees = [
+                new Employee("Homer", "IT", 30000),
+                new Employee("Marge", "HR", 40000),
+                new Employee("Bart", "Security", 50000),
+                new Employee("Lisa", "Finance", 60000)
+            ];
+
+            let employeesProxy = new Proxy(employees, {
+                get: (list, property) => {
+                    for (let employee of list) {
+                        if (employee.name === property) {
+                            return employee;
+                        }
+                    }
+                }
+            });
+
+            print(employeesProxy["Homer"].description);
+        }
+    </script>
+</head>
+<body onload="demo()">
+    <h1>Using Proxies</h1>
+    <div id="content"></div>
+</body>
+</html>
+

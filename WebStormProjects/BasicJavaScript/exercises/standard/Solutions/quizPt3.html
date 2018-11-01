@@ -1,0 +1,701 @@
+<html>
+    <head>
+        <title>Sample Exam To Prepare for Java Certification</title>
+        <script>
+            function registerEventHandlers() {
+                document.getElementById("moreInfoQ1").onclick = function(e) { showExtraInfo("Q1",e); return false; };
+                document.getElementById("moreInfoQ2").onclick = function(e) { showExtraInfo("Q2",e); return false; };
+                document.getElementById("moreInfoQ3").onclick = function(e) { showExtraInfo("Q3",e); return false; };
+                document.getElementById("moreInfoQ4").onclick = function(e) { showExtraInfo("Q4",e); return false; };
+            }
+            function showExtraInfo(questionName, event) {
+                var ajaxClient;
+                if (window.XMLHttpRequest) {
+                    ajaxClient = new XMLHttpRequest();
+                } else {
+                    ajaxClient = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                ajaxClient.onreadystatechange = function() {
+                    if (ajaxClient.readyState === 4 && ajaxClient.status === 200) {
+                        var jsonData = eval( "(" + ajaxClient.responseText + ")" );
+                        displayExtraInfo(questionName, jsonData, event);
+                    }
+                };
+                ajaxClient.open("GET","../Data/extraInfo.json",true);
+                ajaxClient.send();
+            }
+            function displayExtraInfo(questionName, data, event) {
+                var questionDiv = document.getElementById(questionName);
+                var newParaElement = document.createElement("p");
+                var styleAttr = document.createAttribute("style");
+                styleAttr.value = "color:green";
+                newParaElement.setAttributeNode(styleAttr);
+                var newTextNode = document.createTextNode(data[questionName]);
+                newParaElement.appendChild(newTextNode);
+                questionDiv.appendChild(newParaElement);
+                return false;
+            }
+        </script>
+    </head>
+    <body onload="registerEventHandlers()">
+        <h1 class="title">Sample Questions To Prepare For The JCP Exam</h1>
+        <form name="answersForm" onsubmit="return false" action="/nowhere" method="post">
+            <hr/>
+            <h2 style="text-align:center;">Language Features Up To Java 1.4</h2>
+            <hr/>
+            <div id="Q1">
+                <h3>Question One</h3>
+                <p>What will happen when the following code is compiled and run?</p>
+                <pre>
+public class Demo {
+        public static void main(String[] args) {
+                String str = null;
+                if(str instanceof Object) {
+                        System.out.println("Result 1");
+                } else {
+                        System.out.println("Result 2");
+                }
+        }
+}
+                </pre>
+                <input type="hidden" name="q1answer" value="B"/>
+                (A) <input type="radio" name="q1" value="A"/><span class="incorrect">The string 'Result 1' will be printed</span><br/>
+                (B) <input type="radio" name="q1" value="B"/><span class="correct">The string 'Result 2' will be printed</span><br/>
+                (C) <input type="radio" name="q1" value="C"/><span class="incorrect">A NullPointerException will be thrown</span><br/>
+                <p>
+                    <a href="#" id="moreInfoQ1">Get more information about the correct answer</a>
+                </p>
+            </div>
+            <div id="Q2">
+                <h3>Question Two</h3>
+                <p>Which of the following exceptions are compiler checked?</p>
+                <input type="hidden" name="q2answer" value="AD"/>
+                (A) <input type="checkbox" name="q2" value="A"/><span class="correct">InterruptedException</span><br/>
+                (B) <input type="checkbox" name="q2" value="B"/><span class="incorrect">NullPointerException</span><br/>
+                (C) <input type="checkbox" name="q2" value="C"/><span class="incorrect">ArrayIndexOutOfBoundsException</span><br/>
+                (D) <input type="checkbox" name="q2" value="D"/><span class="correct">CloneNotSupportedException</span><br/>
+                <p>
+                    <a href="#" id="moreInfoQ2">Get more information about the correct answer</a>
+                </p>
+            </div>
+            <div id="Q3">
+                <h3>Question Three</h3>
+                <p>A marker interface</p>
+                <input type="hidden" name="q3answer" value="CD"/>
+                (A) <input type="checkbox" name="q3" value="A"/><span class="incorrect">Contains only constant values</span><br/>
+                (B) <input type="checkbox" name="q3" value="B"/><span class="incorrect">Contains only method declarations</span><br/>
+                (C) <input type="checkbox" name="q3" value="C"/><span class="correct">Is always empty</span><br/>
+                (D) <input type="checkbox" name="q3" value="D"/><span class="correct">Indicates some special property of the class</span><br/>
+                <p>
+                    <a href="#" id="moreInfoQ3">Get more information about the correct answer</a>
+                </p>
+            </div>
+            <div id="Q4">
+                <h3>Question Four</h3>
+                <p >Which of the following are valid declarations?</p>
+                <input type="hidden" name="q4answer" value="CE"/>
+                (A) <input type="checkbox" name="q4" value="A"/><span class="incorrect">boolean b = (boolean)7;</span><br/>
+                (B) <input type="checkbox" name="q4" value="B"/><span class="incorrect">float f = 32.7;</span><br/>
+                (C) <input type="checkbox" name="q4" value="C"/><span class="correct">String[] sarray = {"abc","def","ghi"};</span><br/>
+                (D) <input type="checkbox" name="q4" value="D"/><span class="incorrect">int[] iarray = new int[5]{1,2,3,4,5};</span><br/>
+                (E) <input type="checkbox" name="q4" value="E"/><span class="correct">float[][][] farray = new float[4][][];</span><br/>
+                (F) <input type="checkbox" name="q4" value="F"/><span class="incorrect">char c = "\u0000";</span><br/>
+                <p>
+                    <a href="#" id="moreInfoQ4">Get more information about the correct answer</a>
+                </p>
+            </div>
+            <div id="Q5">
+                <h3>Question Five</h3>
+                <p>What will the following expression return?</p>
+                <pre>
+("abc" == "abc") ? true : false;
+                </pre>
+                <input type="hidden" name="q5answer" value="A"/>
+                (A) <input type="radio" name="q5" value="A"/><span class="correct">true</span><br/>
+                (B) <input type="radio" name="q5" value="B"/><span class="incorrect">false</span><br/>
+
+            </div>
+            <div id="Q6">
+                <h3>Question Six</h3>
+                <p>What exception will be thrown when we create an instance of Outer?</p>
+                <pre>
+class Outer {
+        Outer() throws Exception {
+                i = new Inner();
+        }
+        class Inner {
+                Inner() throws Exception {
+                        synchronized(Outer.this) {
+                                wait();
+                        }
+                }
+        }
+        private Inner i;
+}
+                </pre>
+                <input type="hidden" name="q6answer" value="D"/>
+                (A) <input type="radio" name="q6" value="A"/><span class="incorrect">InterruptedException</span><br/>
+                (B) <input type="radio" name="q6" value="B"/><span class="incorrect">NoSuchFieldException</span><br/>
+                (C) <input type="radio" name="q6" value="C"/><span class="incorrect">NullPointerException</span><br/>
+                (D) <input type="radio" name="q6" value="D"/><span class="correct">IllegalMonitorStateException</span><br/>
+
+            </div>
+            <div id="Q7">
+                <h3>Question Seven</h3>
+                <p>Which of the alternatives below correctly describes what will happen when this code is compiled?</p>
+                <pre>
+class Base {
+        Base(String s) {
+                super();
+        }
+}
+class Derived extends Base {
+        Derived(String s) {
+                super(s);
+        }
+        Derived() {}
+}
+                </pre>
+                <input type="hidden" name="q7answer" value="D"/>
+                (A) <input type="radio" name="q7" value="A"/><span class="incorrect">The code will compile without problems</span><br/>
+                (B) <input type="radio" name="q7" value="B"/><span class="incorrect">The code will not compile because Base does not have a base class</span><br/>
+                (C) <input type="radio" name="q7" value="C"/><span class="incorrect">The code will not compile because the no-args constructor of Derived is empty</span><br/>
+                (D) <input type="radio" name="q7" value="D"/><span class="correct">The code will not compile because Base does not have a no-args constructor</span><br/>
+
+            </div>
+            <div id="Q8">
+                <h3>Question Eight</h3>
+                <p>Which of the following declarations are valid for top level classes?</p>
+                <input type="hidden" name="q8answer" value="AE"/>
+                (A) <input type="checkbox" name="q8" value="A"/><span class="correct">public final class MyClass</span><br/>
+                (B) <input type="checkbox" name="q8" value="B"/><span class="incorrect">private abstract class MyClass</span><br/>
+                (C) <input type="checkbox" name="q8" value="C"/><span class="incorrect">synchronized class MyClass</span><br/>
+                (D) <input type="checkbox" name="q8" value="D"/><span class="incorrect">public class MyClass extends String,Thread</span><br/>
+                (E) <input type="checkbox" name="q8" value="E"/><span class="correct">public class MyClass implements Serializable, Cloneable</span><br/>
+
+            </div>
+            <div id="Q9">
+                <h3>Question Nine</h3>
+                <p>Given that the following class is run with:</p>
+                <pre>
+java MyClass fred wilma, barney
+                </pre>
+                <p>What output is produced by the following code?</p>
+                <pre>
+class MyClass {
+        public static void main(String[] args) {
+                System.out.println(args[0]);
+        }
+}
+                </pre>
+                <input type="hidden" name="q9answer" value="D"/>
+                (A) <input type="radio" name="q9" value="A"/><span class="incorrect">MyClass</span><br/>
+                (B) <input type="radio" name="q9" value="B"/><span class="incorrect">fred wilma</span><br/>
+                (C) <input type="radio" name="q9" value="C"/><span class="incorrect">fred wilma,</span><br/>
+                (D) <input type="radio" name="q9" value="D"/><span class="correct">fred</span><br/>
+                (E) <input type="radio" name="q9" value="E"/><span class="incorrect">barney</span><br/>
+
+            </div>
+            <div id="Q10">
+                <h3>Question Ten</h3>
+                <p>Fields marked as 'volatile' are</p>
+                <input type="hidden" name="q10answer" value="C"/>
+                (A) <input type="radio" name="q10" value="A"/><span class="incorrect">Not saved when an object is serialised</span><br/>
+                (B) <input type="radio" name="q10" value="B"/><span class="incorrect">Only ever to be accessed by a single thread</span><br/>
+                (C) <input type="radio" name="q10" value="C"/><span class="correct">Likely to be accessed by multiple threads without synchronization</span><br/>
+
+            </div>
+            <div id="Q11">
+                <h3>Question Eleven</h3>
+                <p>The Java Virtual Machine exits when</p>
+                <input type="hidden" name="q11answer" value="C"/>
+                (A) <input type="radio" name="q11" value="A"/><span class="incorrect">The main method returns</span><br/>
+                (B) <input type="radio" name="q11" value="B"/><span class="incorrect">The last thread completes</span><br/>
+                (C) <input type="radio" name="q11" value="C"/><span class="correct">The last non-daemon thread completes</span><br/>
+
+            </div>
+            <div id="Q12">
+                <h3>Question Twelve</h3>
+                <p>Is the code below a valid implementation of the hashcode method?</p>
+                <pre>
+public int hashCode() {
+        return 17;
+}
+                </pre>
+                <input type="hidden" name="q12answer" value="A"/>
+                (A) <input type="radio" name="q12" value="A"/><span class="correct">Yes</span><br/>
+                (B) <input type="radio" name="q12" value="B"/><span class="incorrect">No</span><br/>
+            </div>
+            <div id="Q13">
+                <h3>Question Thirteen</h3>
+                <p>Are duplicate values allowed in Sets?</p>
+                <input type="hidden" name="q13answer" value="B"/>
+                (A) <input type="radio" name="q13" value="A"/><span class="incorrect">Yes</span><br/>
+                (B) <input type="radio" name="q13" value="B"/><span class="correct">No</span><br/>
+            </div>
+            <div id="Q14">
+                <h3>Question Fourteen</h3>
+                <p>Which statement about Garbage Collection in Java is correct?</p>
+                <input type="hidden" name="q14answer" value="F"/>
+                (A) <input type="radio" name="q14" value="A"/><span class="incorrect">Garbage collection should be optimized for throughput</span><br/>
+                (B) <input type="radio" name="q14" value="B"/><span class="incorrect">The '"System.gc()" method triggers garbage collection</span><br/>
+                (C) <input type="radio" name="q14" value="C"/><span class="incorrect">Garbage collection begins when the VM starts</span><br/>
+                (D) <input type="radio" name="q14" value="D"/><span class="incorrect">The Garbage Collector never needs to interrupt your application</span><br/>
+                (E) <input type="radio" name="q14" value="E"/><span class="incorrect">An object which cannot be reached by live references will be garbage collected</span><br/>
+                (F) <input type="radio" name="q14" value="F"/><span class="correct">None of the above are correct</span><br/>
+
+            </div>
+            <div id="Q15">
+                <h3>Question Fifteen</h3>
+                <p>Given that class Derived inherits from class Base what will occur when the code below is executed?</p>
+                <pre>
+Base ref1 = new Base();
+Base ref2 = new Derived();
+
+boolean b1 = (ref1.getClass() == ref2.getClass());
+boolean b2 = (ref2 instanceof Base);
+
+if(b1 &amp;&amp; b2) {
+        System.out.println("result 1");
+} else {
+        System.out.println("result 2");
+}
+                </pre>
+                <input type="hidden" name="q15answer" value="B"/>
+                (A) <input type="radio" name="q15" value="A"/><span class="incorrect">The string "result 1" will be printed because both b1 and b2 are ture</span><br/>
+                (B) <input type="radio" name="q15" value="B"/><span class="correct">The string "result 2" will be printed because b1 is false</span><br/>
+                (C) <input type="radio" name="q15" value="C"/><span class="incorrect">The string "result 2" will be printed because b2 is false</span><br/>
+                (D) <input type="radio" name="q15" value="D"/><span class="incorrect">The string "result 2" will be printed because both b1 and b2 are false</span><br/>
+
+            </div>
+            <div id="Q16">
+                <h3>Question Sixteen</h3>
+                <p>If you needed a data structure where items were frequently being added and removed at many different positions you 	would choose:</p>
+                <input type="hidden" name="q16answer" value="C"/>
+                (A) <input type="radio" name="q16" value="A"/><span class="incorrect">A Vector</span><br/>
+                (B) <input type="radio" name="q16" value="B"/><span class="incorrect">An ArrayList</span><br/>
+                (C) <input type="radio" name="q16" value="C"/><span class="correct">A LinkedList</span><br/>
+
+            </div>
+            <div id="Q17">
+                <h3>Question Seventeen</h3>
+                <p>A class contains both static and instance methods, all of which are synchronized. Which of the following is correct?	</p>
+                <input type="hidden" name="q17answer" value="C"/>
+                (A) <input type="radio" name="q17" value="A"/><span class="incorrect">The class is thread safe because every thread must acquire a lock before it can call a method	</span><br/>
+                (B) <input type="radio" name="q17" value="B"/><span class="incorrect">The class will not compile because static methods cannot be synchronized</span><br/>
+                (C) <input type="radio" name="q17" value="C"/><span class="correct">The class is not thread safe because two different locks are being acquired</span><br/>
+                (D) <input type="radio" name="q17" value="D"/><span class="incorrect">The class is not thread safe because every method acquires its own lock</span><br/>
+                (E) <input type="radio" name="q17" value="E"/><span class="incorrect">Deadlock will occur if an instance method calls a static method</span><br/>
+
+            </div>
+            <div id="Q18">
+                <h3>Question Eighteen</h3>
+                <p>Public classes may be imported from another package by</p>
+                <input type="hidden" name="q18answer" value="ABC"/>
+                (A) <input type="checkbox" name="q18" value="A"/><span class="correct">Writing an import statement for each class</span><br/>
+                (B) <input type="checkbox" name="q18" value="B"/><span class="correct">Writing a single import statement using the wildcard</span><br/>
+                (C) <input type="checkbox" name="q18" value="C"/><span class="correct">Referring to each class by its fully qualified name</span><br/>
+
+            </div>
+            <div id="Q19">
+                <h3>Question Nineteen</h3>
+                <p>Initializer blocks are</p>
+                <input type="hidden" name="q19answer" value="BC"/>
+                (A) <input type="checkbox" name="q19" value="A"/><span class="incorrect">Only for use in anonymous inner classes</span><br/>
+                (B) <input type="checkbox" name="q19" value="B"/><span class="correct">An alternative to writing a no-args constructor</span><br/>
+                (C) <input type="checkbox" name="q19" value="C"/><span class="correct">Run in the order in which they are declared</span><br/>
+                (D) <input type="checkbox" name="q19" value="D"/><span class="correct">Used for both static and instance initialization</span><br/>
+
+            </div>
+            <div id="Q20">
+                <h3>Question Twenty</h3>
+                <p>Which of the statements below correctly describe overloaded methods?</p>
+                <input type="hidden" name="q20answer" value="ABCE"/>
+                (A) <input type="checkbox" name="q20" value="A"/><span class="correct">They have the same name</span><br/>
+                (B) <input type="checkbox" name="q20" value="B"/><span class="correct">They may have the same return type</span><br/>
+                (C) <input type="checkbox" name="q20" value="C"/><span class="correct">They may have different return types</span><br/>
+                (D) <input type="checkbox" name="q20" value="D"/><span class="incorrect">They may differ only in their return type</span><br/>
+                (E) <input type="checkbox" name="q20" value="E"/><span class="correct">They may differ only in the order of their parameters</span><br/>
+
+            </div>
+            <div id="Q21">
+                <h3>Question Twenty One</h3>
+                <p>Write the missing line of code.</p>
+                <pre>
+class MyClass {
+        public static void main(String[] args) {
+                Inner i;
+                //missing line goes here
+                i.func();
+        }
+        private class Inner {
+                void func() {
+                        System.out.println("Hello From Inner");
+                }
+        }
+}
+                </pre>
+                <p>
+					Write your code here:
+                </p>
+                <input type="hidden" name="q21answer" value=""/>
+                <input  name="q21" type="text" size="90" />
+                <p>
+					The answer will appear below:
+                </p>
+                <input name="codeBoxOne" id="codeBoxOne" type="text" size="90" readonly="readonly"/>
+            </div>
+            <div id="Q22">
+                <h3>Question Twenty Two</h3>
+                <p>What value will be printed by the following code?</p>
+                <pre>
+			int var1 = 12;
+			int var2 = var1++;
+			System.out.println(++var2);
+                </pre>
+                <input type="hidden" name="q22answer" value="B"/>
+                (A) <input type="radio" name="q22" value="A" /><span class="incorrect">12</span><br/>
+                (B) <input type="radio" name="q22" value="B" /><span class="correct">13</span><br/>
+                (C) <input type="radio" name="q22" value="C" /><span class="incorrect">14</span><br/>
+
+            </div>
+            <div id="Q23">
+                <h3>Question Twenty Three</h3>
+                <p>What value will be returned from the following function?</p>
+                <pre>
+int func() {
+        try {
+                int i = 50/0;
+                return 20;
+        } catch(Exception ex) {
+                return 30;
+        } finally {
+                return 40;
+        }
+}
+                </pre>
+                <input type="hidden" name="q23answer" value="C"/>
+                (A) <input type="radio" name="q23" value="A" /><span class="incorrect">20</span><br/>
+                (B) <input type="radio" name="q23" value="B" /><span class="incorrect">30</span><br/>
+                (C) <input type="radio" name="q23" value="C" /><span class="correct">40</span><br/>
+
+            </div>
+            <div id="Q24">
+                <h3>Question Twenty Four</h3>
+                <p>In order to implement cloning</p>
+                <input type="hidden" name="q24answer" value="C"/>
+                (A) <input type="radio" name="q24" value="A" /><span class="incorrect">Your class must override clone and create a deep copy</span><br/>
+                (B) <input type="radio" name="q24" value="B" /><span class="incorrect">Your class must override clone and create a shallow copy</span><br/>
+                (C) <input type="radio" name="q24" value="C" /><span class="correct">Your class must implement the Cloneable interface</span><br/>
+            </div>
+            <div id="Q25">
+                <h3>Question Twenty Five</h3>
+                <p>What would be printed if function 'func' was called?</p>
+                <pre>
+class Outer {
+        int val = 26;
+        class Inner {
+                int val = 36;
+                void func() {
+                        int val = 46;
+                        System.out.println("Values are " + Outer.this.val + " " + this.val + " " + val);
+                }
+        }
+}
+                </pre>
+                <input type="hidden" name="q25answer" value="A"/>
+                (A) <input type="radio" name="q25" value="A" /><span class="correct">Values are 26 36 46</span><br/>
+                (B) <input type="radio" name="q25" value="B" /><span class="incorrect">Values are 46 26 36</span><br/>
+                (C) <input type="radio" name="q25" value="C" /><span class="incorrect">Vlaues are 36 26 46</span><br/>
+                (D) <input type="radio" name="q25" value="D" /><span class="incorrect">None of the above</span><br/>
+
+            </div>
+            <div id="Q26">
+                <h3>Question Twenty Six</h3>
+                <p>Which statement is true about the following code</p>
+                <pre>
+//from Base.java
+package test.one;
+public class Base {
+        protected void func() {
+                System.out.println("XXX");
+        }
+}
+
+//from MyClass.java
+package test.two;
+class Derived extends test.one.Base {
+        void func() {
+                System.out.println("XXX");
+        }
+}
+                </pre>
+                <input type="hidden" name="q26answer" value="E"/>
+                (A) <input type="radio" name="q26" value="A" /><span class="incorrect">The code will not compile because class Derived must have the same accessability as class 	Base</span><br/>
+                (B) <input type="radio" name="q26" value="B" /><span class="incorrect">The code will compile without errors</span><br/>
+                (C) <input type="radio" name="q26" value="C" /><span class="incorrect">The code will not compile because class Derived must be in a file called 'Derived.java'</span><br/>
+                (D) <input type="radio" name="q26" value="D" /><span class="incorrect">The code will not compile because class Derived does not have an import statement for class 	Base</span><br/>
+                (E) <input type="radio" name="q26" value="E" /><span class="correct">The code will not compile because func has the wrong accessibility in class Derived</span><br/>
+
+            </div>
+            <div id="Q27">
+                <h3>Question Twenty Seven</h3>
+                <p>Deprecated methods should not be used because they:</p>
+                <input type="hidden" name="q27answer" value="D"/>
+                (A) <input type="radio" name="q27" value="A" /><span class="incorrect">Have been removed from the current version of the JVM</span><br/>
+                (B) <input type="radio" name="q27" value="B" /><span class="incorrect">Will not be present in the next version of the JVM</span><br/>
+                (C) <input type="radio" name="q27" value="C" /><span class="incorrect">Have been replaced by better implementations</span><br/>
+                (D) <input type="radio" name="q27" value="D" /><span class="correct">Are marked for removal at some point in the future</span><br/>
+
+            </div>
+            <div id="Q28">
+                <h3>Question Twenty Eight</h3>
+                <p>A finalize method is:</p>
+                <input type="hidden" name="q28answer" value="BD"/>
+                (A) <input type="checkbox" name="q28" value="A" /><span class="incorrect">Guaranteed to be called when its object is no longer reachable</span><br/>
+                (B) <input type="checkbox" name="q28" value="B" /><span class="correct">Guaranteed to be called before the object is deleted</span><br/>
+                (C) <input type="checkbox" name="q28" value="C" /><span class="incorrect">Guaranteed to be called at least once</span><br/>
+                (D) <input type="checkbox" name="q28" value="D" /><span class="correct">Guaranteed to be called at most once</span><br/>
+
+            </div>
+            <div id="Q29">
+                <h3>Question Twenty Nine</h3>
+                <p>When class Main is executed what output will appear on the console?</p>
+                <pre>
+public class Main {
+        public static void main(String[] args) {
+                Derived d = new Derived();
+        }
+}
+
+class Base {
+        {
+                System.out.print("-AAAA-");
+        }
+        Base() {
+                System.out.print("-YYYY-");
+        }
+}
+
+class Derived extends Base {
+        static {
+                System.out.print("-ZZZZ-");
+        }
+        {
+                System.out.print("-BBBB-");
+        }
+}
+                </pre>
+                <input type="hidden" name="q29answer" value="B"/>
+                (A) <input type="radio" name="q29" value="A" /><span class="incorrect">-AAAA--BBBB--ZZZZ--YYYY-</span><br/>
+                (B) <input type="radio" name="q29" value="B" /><span class="correct">-ZZZZ--AAAA--YYYY--BBBB-</span><br/>
+                (C) <input type="radio" name="q29" value="C" /><span class="incorrect">-ZZZZ--BBBB--AAAA--YYYY-</span><br/>
+                (D) <input type="radio" name="q29" value="D" /><span class="incorrect">-AAAA--YYYY--ZZZZ--BBBB</span><br/>
+
+            </div>
+            <div id="Q30" class="notInV5Exam">
+                <h3 id="xxx">Question Thirty</h3>
+                <p>Assuming integers a,b and c have all been initialised to -16 what would be the results of the following expressions?</p>
+                <pre>
+a &lt;&lt; 2
+b >> 2
+c >>> 2
+                </pre>
+                <input type="hidden" name="q30answer" value="C"/>
+                (A) <input type="radio" name="q30" value="A" /><span class="incorrect">-64, -1073741820 and -4</span><br/>
+                (B) <input type="radio" name="q30" value="B" /><span class="incorrect">-128, 1073741820 and -4</span><br/>
+                (C) <input type="radio" name="q30" value="C" /><span class="correct">-64, -4 and 1073741820</span><br/>
+
+            </div>
+            <div id="Q31">
+                <h3>Question Thirty One</h3>
+                <p>Consider the following class</p>
+                <pre>
+class MyClass {
+        public static void op1(int p1, long p2) {
+                ival = p1;
+                v_ival = p1;
+                lval = p2;
+                v_lval = p2;
+        }
+        public static void op2(int p1, long p2) {
+                ival = p1;
+                v_ival = p1;
+                lval = p2;
+                v_lval = p2;
+
+        }
+        private static int ival;
+        private static volatile int v_ival;
+        private static long lval;
+        private static volatile long v_lval;
+}
+                </pre>
+                <input type="hidden" name="q31answer" value="D"/>
+                <p>
+					Assume there are two threads, t1 and t2. Given that t1 calls op1(0,-1) and t2 calls op2(-1,0) at the same time
+					which option below correctly states what we can predict about the values in the four variables?
+                </p>
+                <table rules="all">
+                    <tbody>
+                        <tr>
+                            <th>Option</th><th>ival</th><th>v_ival</th><th>lval</th><th>v_lval</th>
+
+                        </tr>
+                        <tr>
+                            <td> (A) <input type="radio" name="q31" value="A"/></td>
+                            <td><span class="incorrect">0 or -1</span></td>
+                            <td><span class="incorrect">0 or -1</span></td>
+                            <td><span class="incorrect">0 or -1</span></td>
+                            <td><span class="incorrect">0 or -1</span></td>
+                        </tr>
+                        <tr>
+                            <td> (B) <input type="radio" name="q31" value="B"/></td>
+                            <td><span class="incorrect">unknown</span></td>
+                            <td><span class="incorrect">unknown</span></td>
+                            <td><span class="incorrect">unknown</span></td>
+                            <td><span class="incorrect">unknown</span></td>
+                        </tr>
+                        <tr>
+                            <td> (C) <input type="radio" name="q31" value="C"/></td>
+                            <td><span class="incorrect">unknown</span></td>
+                            <td><span class="incorrect">0 or -1</span></td>
+                            <td><span class="incorrect">unknown</span></td>
+                            <td><span class="incorrect">0 or -1</span></td>
+                        </tr>
+                        <tr>
+                            <td> (D) <input type="radio" name="q31" value="D"/></td>
+                            <td><span class="correct">0 or -1</span></td>
+                            <td><span class="correct">0 or -1</span></td>
+                            <td><span class="correct">unknown</span></td>
+                            <td><span class="correct">0 or -1</span></td>
+                        </tr>
+                        <tr>
+                            <td> (E) <input type="radio" name="q31" value="E"/></td>
+                            <td><span class="incorrect">unknown</span></td>
+                            <td><span class="incorrect">unknown</span></td>
+                            <td><span class="incorrect">0 or -1</span></td>
+                            <td><span class="incorrect">0 or -1</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="Q32">
+                <h3>Question Thirty Two</h3>
+                <p>Is the following a valid interface declaration?</p>
+                <pre>
+public interface Shop {
+        public class Item {
+                public String name;
+                public String code;
+                public double cost;
+        }
+        public abstract Item findItem(String code);
+}
+                </pre>
+                <input type="hidden" name="q32answer" value="A"/>
+                (A) <input type="radio" name="q32" value="A" /><span class="correct">Yes</span><br/>
+                (B) <input type="radio" name="q32" value="B" /><span class="incorrect">No</span><br/>
+            </div>
+            <div id="Q33">
+                <h3>Question Thirty Three</h3>
+                <p>A class can implement multiple interfaces containing identical method declarations</p>
+                <input type="hidden" name="q33answer" value="A"/>
+                (A) <input type="radio" name="q33" value="A" /><span class="correct">True</span><br/>
+                (B) <input type="radio" name="q33" value="B" /><span class="incorrect">False</span><br/>
+            </div>
+            <div id="Q34">
+                <h3>Question Thirty Four</h3>
+                <p>The default implementation of the 'equals' method tests for</p>
+                <input type="hidden" name="q34answer" value="B"/>
+                (A) <input type="radio" name="q34" value="A" /><span class="incorrect">Equality of state</span><br/>
+                (B) <input type="radio" name="q34" value="B" /><span class="correct">Equality of reference</span><br/>
+
+            </div>
+            <div id="Q35">
+                <h3>Question Thirty Five</h3>
+                <p>Which statement is true about the following code?</p>
+                <pre>
+interface Shop {
+        int CLOSING_TIME = 1900;
+        void closeShop();
+}
+                </pre>
+                <input type="hidden" name="q35answer" value="A"/>
+                (A) <input type="radio" name="q35" value="A" /><span class="correct">The code will compile without problems</span><br/>
+                (B) <input type="radio" name="q35" value="B" /><span class="incorrect">The code will not compile because <em>CLOSING_TIME</em> should be declared public, final and static</span><br/>
+                (C) <input type="radio" name="q35" value="C" /><span class="incorrect">The code will not compile because <em>closeShop</em> should be declared public and abstract</span><br/>
+                (D) <input type="radio" name="q35" value="D" /><span class="incorrect">The code will not compile because interfaces must be public</span><br/>
+
+            </div>
+            <div id="Q36">
+                <h3>Question Thirty Six</h3>
+                <p>What will be the effect of the following expression?</p>
+                <pre>
+obj.notify();
+                </pre>
+                <input type="hidden" name="q36answer" value="D"/>
+                (A) <input type="radio" name="q36" value="A" /><span class="incorrect">The current thread will be woken if it is asleep</span><br/>
+                (B) <input type="radio" name="q36" value="B" /><span class="incorrect">The Thread object obj will be woken if it is waiting</span><br/>
+                (C) <input type="radio" name="q36" value="C" /><span class="incorrect">All threads in the wait group owned by obj will be woken</span><br/>
+                (D) <input type="radio" name="q36" value="D" /><span class="correct">A single thread in the wait group owned by obj will be woken</span><br/>
+
+            </div>
+            <div id="Q37">
+                <h3>Question Thirty Seven</h3>
+                <p>Which of the following are keywords in Java?</p>
+                <input type="hidden" name="q37answer" value="DE"/>
+                (A) <input type="checkbox" name="q37" value="A" /><span class="incorrect">false</span><br/>
+                (B) <input type="checkbox" name="q37" value="B" /><span class="incorrect">NULL</span><br/>
+                (C) <input type="checkbox" name="q37" value="C" /><span class="incorrect">null</span><br/>
+                (D) <input type="checkbox" name="q37" value="D" /><span class="correct">const</span><br/>
+                (E) <input type="checkbox" name="q37" value="E" /><span class="correct">default</span><br/>
+
+            </div>
+            <div id="Q38">
+                <h3>Question Thirty Eight</h3>
+                <p>If thread A calls 'interrupt()' on thread B which of the following statements are true?</p>
+                <input type="hidden" name="q38answer" value="AC"/>
+                (A) <input type="checkbox" name="q38" value="A" /><span class="correct">The interrupt flag will be set for thread B if it is running</span><br/>
+                (B) <input type="checkbox" name="q38" value="B" /><span class="incorrect">If thread B is waiting an InterruptedException will be thrown and the interrupt flag will be set</span><br/>
+                (C) <input type="checkbox" name="q38" value="C" /><span class="correct">If thread B is sleeping an InterruptedException will be thrown and the interrupt flag will NOT be set	</span><br/>
+                (D) <input type="checkbox" name="q38" value="D" /><span class="incorrect">The thread will be paused until thread B calls the 'resume' method on thread A</span><br/>
+
+            </div>
+            <div id="Q39">
+                <h3>Question Thirty Nine</h3>
+                <p>Which loop declaration would enable you to process each element in 'myarray'</p>
+                <pre>
+//loop one
+for(int i=0;i&lt;myarray.length();i++) {
+        //use 'myarray[i]' here
+}
+
+//loop two
+for(int i = myarray.length; i>0; i--) {
+        //use 'myarray[i]' here
+}
+
+//loop three
+int count = 0;
+while(count &lt; myarray.length) {
+        //use 'myarray[count++]' here
+}
+                </pre>
+                <input type="hidden" name="q39answer" value="C"/>
+                (A) <input type="radio" name="q39" value="A" /><span class="incorrect">Loop one</span><br/>
+                (B) <input type="radio" name="q39" value="B" /><span class="incorrect">Loop two</span><br/>
+                (C) <input type="radio" name="q39" value="C" /><span class="correct">Loop three</span><br/>
+
+            </div>
+            <div id="Q40">
+                <h3>Question Forty</h3>
+                <p>Which interface is implemented by java.lang.Thread?</p>
+                <input type="hidden" name="q40answer" value="B"/>
+                (A) <input type="radio" name="q40" value="A" /><span class="incorrect">java.lang.Cloneable</span><br/>
+                (B) <input type="radio" name="q40" value="B" /><span class="correct">java.lang.Runnable</span><br/>
+                (C) <input type="radio" name="q40" value="C" /><span class="incorrect">java.io.Serializable</span><br/>
+            </div>
+        </form>
+    </body>
+</html>

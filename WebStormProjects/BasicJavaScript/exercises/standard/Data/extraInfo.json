@@ -1,0 +1,6 @@
+{
+    "Q1" : "Although all objects extend 'java.lang.Object' the 'null' type is not an object",
+    "Q2" : "If 'NullPointerException' were compiler checked you would never get any real code written... ",
+    "Q3" : "Marker interfaces were what Java used before annotations to signify that a class was special",
+    "Q4" : "REM There is no equivalence between booleans and numbers and '1.2' is a double by default"
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Palindromes Exercise Solution</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style type="text/css">
+            input[type="text"] { width: 30%; margin-bottom: 1em; border-color: black; }
+        </style>
+        <script>
+            function checkForPalindromes() {
+                for(var x=1;x<=7;x++) {
+                    var textBox = document.getElementById("data" + x);
+                    var resultBox = document.getElementById("result" + x);
+                    
+                    if(isAPalindrome(textBox.value)) {
+                        resultBox.innerHTML = "'" + textBox.value + "' is a palindrome";
+                    } else {
+                        resultBox.innerHTML = "'" + textBox.value + "' is NOT a palindrome";
+                    }
+                }
+            }
+            function isAPalindrome(inputData) {
+                var modifiedData = inputData.toLowerCase();
+                modifiedData = modifiedData.replace(/[^a-z]+/g,'');
+                
+                var chars = [];
+                for(var x= (modifiedData.length - 1); x >= 0; x--) {
+                    chars.push(modifiedData.charAt(x));
+                }
+                var reversedData = chars.join('');
+                
+                return modifiedData === reversedData;
+            }
+        </script>
+    </head>
+    <body>
+        <form action="javascript:checkForPalindromes()">
+            <div>  
+                <input type="text" id="data1" value="A man, a plan, a canal, Panama"/>
+                <span id="result1"></span>
+            </div>
+            <div>  
+                <input type="text" id="data2" value="Gold is where you find it"/>
+                <span id="result2"></span>
+            </div>
+            <div>  
+                <input type="text" id="data3" value="If I had a hi-fi"/>
+                <span id="result3"></span>
+            </div>
+            <div>  
+                <input type="text" id="data4" value="Fortune favors the prepared mind"/>
+                <span id="result4"></span>
+            </div>
+            <div>  
+                <input type="text" id="data5" value="Rats live on no evil star"/>
+                <span id="result5"></span>
+            </div>
+            <div>  
+                <input type="text" id="data6" value="There is no abstract living"/>
+                <span id="result6"></span>
+            </div>
+            <div>  
+                <input type="text" id="data7" value="Some men interpret nine memos"/>
+                <span id="result7"></span>
+            </div>
+            <input type="submit" value="Test Strings..."/>
+        </form>
+    </body>
+</html>

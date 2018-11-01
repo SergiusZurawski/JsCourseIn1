@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    canvas {
+        background: white;
+        width: 100vmax;
+        height: 100vmax;
+    }
+</style>
+<body>
+
+<div>
+    <canvas id="graphics" width="1000" height="1000"></canvas>
+</div>
+
+</body>
+<script>
+    const canvas = document.getElementById("graphics");
+
+    class Circle {
+        constructor(radius, x, y, color) {
+            this.radius = radius;
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            this.directionX = 10;
+        }
+
+        draw(ctx) {
+            ctx.beginPath();
+            ctx.fillStyle = this.color;
+            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            ctx.stroke();
+        }
+
+        update() {
+            this.x += this.directionX;
+
+            if (this.x > canvas.width - this.radius || this.x < this.radius) {
+                this.directionX = -this.directionX;
+            }
+        }
+    }
+
+    class GraphicsArea {
+        constructor() {
+            this.ctx = canvas.getContext("2d");
+            this.circle = new Circle(10, 100, 100, "blue");
+            this.interval = setInterval(() => this.draw(), 100);
+        }
+
+        draw() {
+            this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+            this.circle.update();
+            this.circle.draw(this.ctx);
+        }
+    }
+
+    function random(min, max) {
+        return min + Math.random() * (max - min);
+    }
+
+    const graphics = new GraphicsArea();
+    updateShapes();
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

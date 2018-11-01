@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><script src="../../../node_modules/systemjs/dist/system.js"></script>
+    <script src="../../../node_modules/systemjs/dist/system.js"></script>
+    <script>base = "../../..";</script>
+    <script src="../../../systemjs-config.js"></script>
+</head>
+<body>
+    <form class="form">
+        <div>
+        <label>Value</label>
+        <input id="value" type="number" value="2">
+        <input id="add" type="button" value="Add">
+        <input id='subtract' type="button" value="Subtract">
+        <input id='multiply' type="button" value="Multiply">
+        <input id='divide' type="button" value="Divide">
+        </div>
+        <div>
+            <input id='undo' type="button" value="Undo">
+        </div>
+    </form>
+    <h1>Result <span id="result"></span></h1>
+
+    <script>
+        SystemJS.import("./command.js");
+    </script>
+</body>
+</html>

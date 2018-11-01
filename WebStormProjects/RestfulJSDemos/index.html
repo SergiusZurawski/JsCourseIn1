@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="restful.standalone.min.js"></script>
+    <script>
+        function buildCourseRenderer(domNodeId) {
+            return function(response) {
+                var course = response.body().data();
+                var msg = '(' + course.id + ') called ' + course.title;
+                document.getElementById(domNodeId)
+                        .appendChild(document.createTextNode(msg));
+            }
+        }
+        function fetchAndPrintCourses(domNodeId) {
+            function listAllCourses(response) {
+                var courseEntities = response.body();
+                var theList = document.getElementById(domNodeId);
+                var listItems = courseEntities.map(function(courseEntity){
+                    var course = courseEntity.data();
+                    var msg = course.title + '  (' + course.duration
+                                + ' days / ' + course.difficulty.toLowerCase() + ')';
+                    var item = document.createElement("li");
+                    item.appendChild(document.createTextNode(msg));
+                    return item;
+                });
+                listItems.forEach(function(item) { theList.appendChild(item); });
+            }
+            var coursesCollection = api.all('courses');
+            coursesCollection.getAll().then(listAllCourses);
+        }
+        function fetchAndPrintSingleCourse(domNodeId) {
+            var func = buildCourseRenderer(domNodeId);
+            api.one("courses","AB12").get().then(func);
+        }
+        function fetchAndPrintSingleCourseViaCollection(domNodeId) {
+            var func = buildCourseRenderer(domNodeId);
+            var coursesCollection = api.all("courses");
+            coursesCollection.get("CD34").then(func);
+        }
+        function deleteAndPrintCourses(domNodeId) {
+            var coursesCollection = api.all('courses');
+            coursesCollection.getAll().then(function(response){
+                var entities = response.body();
+                var entitiesToDie = entities.filter(function(entity) {
+                    return ['KL12','UV12','WX34'].includes(entity.data().id);
+                });
+                var promises = entitiesToDie.map(function(entity){ return entity.delete(); });
+                Promise.all(promises).then(function(){fetchAndPrintCourses(domNodeId)});
+                //Uncomment the below to demonstrate a race condition
+                //entitiesToDie.forEach(function(entity) {entity.delete();});
+                //fetchAndPrintCourses(domNodeId);
+            });
+        }
+        function updateAndPrintCourses(domNodeId) {
+            api.one("courses","AB12").get().then(function(response){
+                var courseEntity = response.body();
+                var course = courseEntity.data();
+
+                course.title = "Expert Scala";
+                course.duration = 2;
+                course.difficulty = "ADVANCED";
+
+                courseEntity.save().then(function(){fetchAndPrintCourses(domNodeId)});
+            });
+        }
+        function demo() {
+            fetchAndPrintCourses("out1");
+            fetchAndPrintSingleCourse("out2");
+            fetchAndPrintSingleCourseViaCollection("out3");
+            deleteAndPrintCourses("out4");
+            updateAndPrintCourses("out5");
+        }
+        var api = restful('http://localhost:8080');
+    </script>
+</head>
+<body onload="demo()">
+    <h2>All the courses</h2>
+    <ul id="out1"></ul>
+    <h2>The course with ID of 'AB12' (fetched individually)</h2>
+    <p><mark id="out2"></mark></p>
+    <h2>The course with ID of 'CD34' (fetched via collection)</h2>
+    <p><mark id="out3"></mark></p>
+    <h2>All the courses after deletions</h2>
+    <ul id="out4"></ul>
+    <h2>All the courses after an update</h2>
+    <ul id="out5"></ul>
+</body>
+</html>

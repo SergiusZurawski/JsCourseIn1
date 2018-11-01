@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    canvas {
+        background: white;
+        width: 100vmax;
+        height: 100vmax;
+    }
+
+    input {
+        width: 1000px;
+    }
+
+    #shapes {
+        height: 50px;
+    }
+
+    .control {
+        font-style: oblique;
+    }
+
+</style>
+<body>
+
+<div>
+    <label class="control">Number of Balls</label>
+    <input id="shapes" type="range" value="200" min="20" max="1000" onchange="updateShapes()">
+</div>
+<div>
+    <label class="control">FPS</label>
+    <input id="fps" type="range" value="10" min="5" max="60" onchange="updateSpeed()">
+</div>
+<div>
+    <canvas id="graphics" width="1000" height="1000"></canvas>
+</div>
+
+</body>
+<script>
+    function random(min, max) {
+        return Math.floor(min + Math.random() * (max - min + 1));
+    }
+
+    class Circle {
+        constructor(radius, x, y, color) {
+            this.radius = radius;
+            this.x = x;
+            this.y = y;
+            this.color = color;
+        }
+
+        draw(ctx) {
+            ctx.beginPath();
+            ctx.fillStyle = this.color;
+            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            ctx.stroke();
+        }
+    }
+
+    class Square {
+        constructor(width, x, y, color) {
+            this.width = width;
+            this.x = x;
+            this.y = y;
+            this.color = color;
+        }
+
+        draw(ctx) {
+            ctx.beginPath();
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.width, this.width);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            ctx.strokeRect(this.x, this.y, this.width, this.width);
+        }
+    }
+
+    class Triangle {
+        constructor(side, x, y, color) {
+            this.side = side;
+            const halfSide = (this.side / 2);
+            this.x = x;
+            this.y = y;
+            this.height = Math.sqrt(
+                (this.side * this.side) -
+                (halfSide * halfSide));
+            this.color = color;
+        }
+
+        draw(ctx) {
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.x + this.side, this.y);
+            ctx.lineTo(this.x + this.side / 2, this.y + this.height);
+            ctx.closePath();
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.stroke();
+        }
+    }
+
+    class Bouncer {
+        constructor(shape, speedX, speedY) {
+            this.shape = shape;
+            this.directionX = speedX;
+            this.directionY = speedY;
+        }
+
+        draw(ctx) {
+            this.shape.draw(ctx);
+        }
+
+        update(graphicsArea) {
+            let x = this.shape.x;
+            let y = this.shape.y;
+            x += this.directionX;
+            y += this.directionY;
+
+            if (x > graphicsArea.width || x < 0) {
+                this.directionX = -this.directionX;
+            }
+
+            if (y > graphicsArea.width || y < 0) {
+                this.directionY = -this.directionY;
+            }
+
+            this.shape.x = x;
+            this.shape.y = y;
+        }
+    }
+
+    function createRandomShape() {
+        const color = `rgba(${random(0, 255)},${random(0, 255)},${random(0, 255)},${Math.random()})`;
+
+        const shapeId = random(0, 2);
+        switch (shapeId) {
+            case 0:
+                return new Square(
+                    random(20, 50),
+                    random(10, 1000),
+                    random(10, 1000),
+                    color);
+            case 1:
+                return new Circle(
+                    random(20, 60),
+                    random(10, 1000),
+                    random(10, 1000),
+                    color);
+            case 2:
+                return new Triangle(
+                    random(20, 50),
+                    random(10, 1000),
+                    random(10, 1000),
+                    color);
+            default:
+                throw "Unknown Shape";
+        }
+    }
+
+    function createRandomBouncer() {
+        return new Bouncer(
+            createRandomShape(),
+            random(-20, 20),
+            random(-20, 20));
+    }
+
+    class GraphicsArea {
+        constructor(canvasName) {
+            this.canvas = document.getElementById(canvasName);
+            this.ctx = this.canvas.getContext("2d");
+            this.shapes = [];
+            this.setIntervalTime(100);
+        }
+
+        setIntervalTime(time) {
+            if (this.interval) {
+                clearInterval(this.interval);
+            }
+            this.interval = setInterval(() => this.draw(), time);
+        }
+
+        addShape(shape) {
+            this.shapes.push(shape);
+        }
+
+        setShapes(shapes) {
+            this.shapes = shapes;
+        }
+
+        draw() {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.shapes.forEach(shape => {
+                shape.update(this);
+                shape.draw(this.ctx);
+            });
+        }
+
+        get width() {
+            return this.canvas.width;
+        }
+
+        get height() {
+            return this.canvas.height;
+        }
+    }
+
+    function updateShapes() {
+        const activeShapes = shapes.slice(0, shapeSlider.value);
+        graphics.setShapes(activeShapes);
+    }
+
+    function updateSpeed() {
+        graphics.setIntervalTime(1000 / fpsSlider.value);
+    }
+
+    const shapeSlider = document.getElementById("shapes");
+    const fpsSlider = document.getElementById("fps");
+
+    const graphics = new GraphicsArea("graphics");
+
+    let shapes = new Array(parseInt(shapeSlider.max)).fill(null).map(createRandomBouncer);
+
+    updateShapes();
+</script>
+</html>

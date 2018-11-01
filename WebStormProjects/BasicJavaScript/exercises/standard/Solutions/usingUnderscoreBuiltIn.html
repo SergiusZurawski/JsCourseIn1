@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Using Underscore To Check Form Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="../Frameworks/underscore/underscore-min.js"></script>
+    <script>
+        function findLabelOfInput(theInput) {
+            function compareLabelToInput(theLabel) {
+                return theLabel.getAttribute('for') === theInput.id;
+            }
+
+            var allLabels = Array.from(document.getElementsByTagName("label"));
+            return allLabels.find(compareLabelToInput);
+        }
+
+        function inputIsEmpty(theInput) {
+            return theInput.value === "";
+        }
+
+        function inputIsNotEmpty(theInput) {
+            return !inputIsEmpty(theInput);
+        }
+
+        function makeLabelTextRed(theLabel) {
+            changeLabelColor(theLabel, "red");
+        }
+
+        function makeLabelTextBlack(theLabel) {
+            changeLabelColor(theLabel, "black");
+        }
+
+        function changeLabelColor(theLabel, color) {
+            theLabel.setAttribute("style", "color:" + color);
+        }
+
+        function checkMe() {
+            var allInputs = Array.from(document.getElementsByTagName("input"));
+
+            if (allInputs.every(inputIsNotEmpty)) {
+                return true;
+            }
+
+            allInputs.filter(inputIsEmpty)
+                .map(findLabelOfInput)
+                .forEach(makeLabelTextRed);
+
+            allInputs.filter(inputIsNotEmpty)
+                .map(findLabelOfInput)
+                .forEach(makeLabelTextBlack);
+            return false;
+        }
+    </script>
+</head>
+<body>
+<h1>Using Underscore To Check Form Content</h1>
+<form method='post' onsubmit="return checkMe();" action="javascript:alert('Form Submitted!')">
+    <p>
+        <label for="field1">Label for field1</label>
+        <input type="text" id="field1" name="field1" size="10"/>
+    </p>
+    <p>
+        <label for="field2">Label for field2</label>
+        <input type="text" id="field2" name="field2" size="10"/>
+    </p>
+    <p>
+        <label for="field3">Label for field3</label>
+        <input type="text" id="field3" name="field3" size="10"/>
+    </p>
+    <p>
+        <label for="field4">Label for field4</label>
+        <input type="text" id="field4" name="field4" size="10"/>
+    </p>
+    <p>
+        <label for="field5">Label for field5</label>
+        <input type="text" id="field5" name="field5" size="10"/>
+    </p>
+    <p>
+        <label for="field6">Label for field6</label>
+        <input type="text" id="field6" name="field6" size="10"/>
+    </p>
+    <p>
+        <button type="submit">Submit Form</button>
+    </p>
+</form>
+</body>
+</html>

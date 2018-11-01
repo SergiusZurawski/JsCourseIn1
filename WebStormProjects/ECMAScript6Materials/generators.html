@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ES6</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css">
+    <!-- Babel Transcompiler - in the real world you would use webpack
+         or other build tool to transcompile your ES6, JSX etc... -->
+    <script src="babel-standalone/babel.js"></script>
+    <script>
+        function printTitle(title) {
+            var content = document.getElementById("content");
+            var newNode = document.createElement("h3");
+            newNode.appendChild(document.createTextNode(title));
+            content.appendChild(newNode);
+        }
+        function print(text) {
+            var content = document.getElementById("content");
+            var newNode = document.createElement("output");
+            newNode.appendChild(document.createTextNode(text));
+            content.appendChild(newNode);
+        }
+    </script>
+    <script type="text/babel" data-presets="es2016,stage-2">
+        function demo() {
+            function log(title, generator) {
+                printTitle(title);
+                let next = generator.next();
+                while (!next.done) {
+                    print(next.value);
+                    next = generator.next();
+                }
+            }
+
+            function* fourToSix() {
+                yield 4;
+                yield 5;
+                yield 6;
+            }
+
+            function* numbers() {
+                yield 1;
+                yield 2;
+                yield 3;
+                yield* fourToSix();
+                yield 7;
+                yield 8;
+                yield 9;
+            }
+
+            function* wordPairs(string) {
+                let words = string.split(" ");
+                for (let index = 0; index < words.length - 1; index++) {
+                    yield [words[index], words[index+1]];
+                }
+            }
+
+            let generator1 = wordPairs("This is some text that we will parse.");
+            log("Simple generator", generator1);
+
+            printTitle("Delegating generator");
+            for (let number of numbers()) {
+                print(number);
+            }
+
+            printTitle("Delegating generator mapped");
+            Array.from(numbers())
+                .map(x => x * 2)
+                .forEach(print);
+        }
+    </script>
+</head>
+<body onload="demo()">
+    <h1>Generator Functions</h1>
+    <div id="content"></div>
+</body>
+</html>
+

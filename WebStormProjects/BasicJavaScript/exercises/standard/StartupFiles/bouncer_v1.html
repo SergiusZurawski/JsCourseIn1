@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    canvas {
+        background: white;
+        width: 100vmax;
+        height: 100vmax;
+    }
+</style>
+<body>
+<div>
+    <canvas id="graphics" width="1000" height="1000"></canvas>
+</div>
+</body>
+<script>
+    const canvas = document.getElementById("graphics");
+    const ctx = canvas.getContext("2d");
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.beginPath();
+    ctx.fillStyle = "blue";
+    ctx.arc(100, 200, 30, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+
+    function sayHello() {
+        console.log("Hello");
+    }
+
+    setInterval(sayHello, 1000);
+
+</script>
+</html>

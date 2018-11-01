@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ES6</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css">
+    <!-- Babel Transcompiler - in the real world you would use webpack
+         or other build tool to transcompile your ES6, JSX etc... -->
+    <script src="babel-standalone/babel.js"></script>
+    <script>
+        function printTitle(title) {
+            var content = document.getElementById("content");
+            var newNode = document.createElement("h3");
+            newNode.appendChild(document.createTextNode(title));
+            content.appendChild(newNode);
+        }
+        function print(text) {
+            var content = document.getElementById("content");
+            var newNode = document.createElement("output");
+            newNode.appendChild(document.createTextNode(text));
+            content.appendChild(newNode);
+        }
+    </script>
+    <script type="text/babel" data-presets="es2016,stage-2">
+        function demo() {
+            var array = ["abc", 123, "def", 456, "ghi", 789];
+
+            printTitle("--- Single line function ---");
+            // 'return' is implicit, brackets are not necessary
+            var numbers = array.filter(value => typeof(value) === "number");
+            numbers.forEach(value => print(value));
+
+            printTitle("--- Multi line function ---");
+            // 'return' required, brackets required
+            var strings = array.map(value => {
+                value += "xxx";
+                return value.toUpperCase();
+            });
+            strings.forEach(value => print(value));
+        }
+    </script>
+</head>
+<body onload="demo()">
+    <h1>Using Arrow Functions</h1>
+    <div id="content"></div>
+</body>
+</html>
+

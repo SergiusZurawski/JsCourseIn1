@@ -1,0 +1,15 @@
+body {
+    padding-top: 10px;
+}
+
+.logo {
+    height: 40px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.hidden { 
+  display: none; 
+}

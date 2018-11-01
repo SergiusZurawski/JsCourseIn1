@@ -1,0 +1,87 @@
+<script>
+    function printPyramid(size) {
+        var spaces = size - 1;
+        var hashes = 1;
+        for (var x = 0; x < size; x++) {
+            for (var y = 0; y < spaces; y++) {
+                document.write(" ");
+            }
+            for (var y = 0; y < hashes; y++) {
+                document.write("#");
+            }
+            document.write("\n");
+            spaces--;
+            hashes += 2;
+        }
+    }
+    function printSquare(size) {
+        for (var x = 0; x < size; x++) {
+            if (x === 0 || x === (size - 1)) {
+                for (var y = 0; y < size; y++) {
+                    document.write("# ");
+                }
+                document.write("\n");
+            } else {
+                document.write("# ");
+                for (var y = 0; y < (size - 2); y++) {
+                    document.write("  ");
+                }
+                document.write("#");
+                document.write("\n");
+            }
+        }
+    }
+    function printRectangle(length, height) {
+        for (var x = 0; x < height; x++) {
+            if (x === 0 || x === (height - 1)) {
+                for (var y = 0; y < length; y++) {
+                    document.write("# ");
+                }
+                document.write("\n");
+            } else {
+                document.write("# ");
+                for (var y = 0; y < (length - 2); y++) {
+                    document.write("  ");
+                }
+                document.write("#");
+                document.write("\n");
+            }
+        }
+    }
+    function wrapInPre(func) {
+        return function(a,b) {
+            document.write("<pre>");
+            func(a,b);
+            document.write("</pre>");
+        };
+    }
+    function buildShapePrinter(shapeName) {
+        switch(shapeName) {
+            case "pyramid":
+                return wrapInPre(printPyramid);
+            case "square":
+                return wrapInPre(printSquare);
+            case "rectangle":
+                return wrapInPre(printRectangle);
+            default:
+                return function() { document.write("No such shape!"); };
+        }
+    }
+
+    var pyramidPrinter = buildShapePrinter("pyramid");
+    var squarePrinter = buildShapePrinter("square");
+    var rectanglePrinter = buildShapePrinter("rectangle");
+
+    document.write("<h2>Here is a pyramid of height 5:</h2>");
+    pyramidPrinter(5);
+    document.write("<h2>Here is a pyramid of height 10:</h2>");
+    pyramidPrinter(10);
+    document.write("<h2>Here is a square of height 5:</h2>");
+    squarePrinter(5);
+    document.write("<h2>Here is a square of height 10:</h2>");
+    squarePrinter(10);
+    document.write("<h2>Here is a rectangle of dimensions 5, 10:</h2>");
+    rectanglePrinter(5,10);
+    document.write("<h2>Here is a rectangle of dimensions 10, 15:</h2>");
+    rectanglePrinter(10,15);
+</script>

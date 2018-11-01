@@ -1,0 +1,105 @@
+<html> 
+    <head>
+        <title>SCJP Booking Form</title>
+        <script>
+            function retrieveTestCenters() {
+                var ajaxClient;
+
+                if (window.XMLHttpRequest) {
+                    ajaxClient = new XMLHttpRequest();
+
+                } else {
+                    ajaxClient = new ActiveXObject("Microsoft.XMLHTTP");
+
+                }
+                ajaxClient.onreadystatechange = function() {
+                    if (ajaxClient.readyState === 4 && ajaxClient.status === 200) {
+                        var jsonData = eval( "(" + ajaxClient.responseText + ")" );
+                        for(var i=0; i < jsonData.items.length; i++) {
+                            var entry = jsonData.items[i];
+                            addTestCenter(entry.name, entry.code);
+                        }
+                    }
+                };
+                ajaxClient.open("GET","../Data/testingCenters.json",true);
+                ajaxClient.send();
+            }
+            function addTestCenter(name, code) {
+                var newOption = document.createElement("option");
+
+                var newOptionText = document.createTextNode(name);
+                newOption.appendChild(newOptionText);
+
+                var valueAttr = document.createAttribute("value");
+                valueAttr.value = code;
+                newOption.setAttributeNode(valueAttr);
+                
+                document.forms[0].chosenTestCenter.appendChild(newOption);
+            }
+            function validateData() {
+                var success = true;
+                with(document.forms[0]) {
+                    if(testDate.value === "") {
+                        displayError("testDate","Please choose a date");
+                        success = false;
+                    } else {
+                        clearError("testDate");
+                    }
+                    if(testTime.value === "") {
+                        displayError("testTime","Please choose a time");
+                        success = false;
+                    } else {
+                        clearError("testTime");
+                    }
+                    if(candidateCode.value === "") {
+                        displayError("candidateCode","Please enter your candidate code");
+                        success = false;
+                    } else {
+                        if(/[A-Z]{3}[1-9]{3}/.exec(candidateCode.value) === null) {
+                            displayError("candidateCode","Your code must be 3 uppercase letters followed by 3 digits");
+                            success = false;
+                        } else {
+                            clearError("candidateCode");
+                        }
+                    } 
+                }
+                return success;
+            }
+            function displayError(fieldName, text) {
+                var errorDisplayNode = document.getElementById(fieldName + "Error");
+                errorDisplayNode.innerHTML = text;
+            }
+            function clearError(fieldName) {
+                var errorDisplayNode = document.getElementById(fieldName + "Error");
+                errorDisplayNode.innerHTML = "";
+            }
+        </script>
+    </head>
+    <body onload="retrieveTestCenters();">
+        <form onsubmit="return validateData();" action="javascript:alert('All Valid!')" method="post">
+            <p>
+                Which testing center would you like to book?<br/>
+                <select name="chosenTestCenter">
+                </select>
+            </p>
+            <p>
+                On what date would you like to take the test?<br/>
+                <input type="text" name="testDate" size="20"/>
+                <span id="testDateError" style="color:red"></span>
+            </p>
+            <p>
+                At what time would you like to take the test?<br/>
+                <input type="text" name="testTime" size="20"/>
+                <span id="testTimeError" style="color:red"></span>
+            </p>
+            <p>
+                Please enter your candidate code:<br/>
+                <input type="text" id="candidateCode" name="candidateCode" size="30"/>
+                <span id="candidateCodeError" style="color:red"></span>
+            </p>
+            <p>
+                <input type="submit" value="Submit Form"/>
+            </p>
+        </form>
+    </body>
+</html>

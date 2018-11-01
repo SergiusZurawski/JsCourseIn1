@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ES6</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css">
+    <!-- Babel Transcompiler - in the real world you would use webpack
+         or other build tool to transcompile your ES6, JSX etc... -->
+    <script src="babel-standalone/babel.js"></script>
+    <script>
+        function printTitle(title) {
+            var content = document.getElementById("content");
+            var newNode = document.createElement("h3");
+            newNode.appendChild(document.createTextNode(title));
+            content.appendChild(newNode);
+        }
+        function print(text) {
+            var content = document.getElementById("content");
+            var newNode = document.createElement("output");
+            newNode.appendChild(document.createTextNode(text));
+            content.appendChild(newNode);
+        }
+    </script>
+    <script type="text/babel" data-presets="es2016,stage-2">
+        function demo() {
+            class Employee {
+                constructor(name) {
+                    this.name = name;
+                }
+
+                calcSalary() {
+                    print(`Calculating salary for ${this.name}`);
+                }
+
+                takeHoliday() {
+                    print(`${this.name} is taking a holiday`);
+                }
+            }
+
+            class Manager extends Employee {
+                constructor(name) {
+                    super(name);
+                }
+
+                promote(employee) {
+                    print(`${this.name} is promoting ${employee.name}`);
+                }
+
+                downsize(employee) {
+                    print(`${this.name} is downsizing ${employee.name}`);
+                }
+            }
+
+            let dave = new Employee("Dave");
+            dave.calcSalary();
+            dave.takeHoliday();
+
+            let jane = new Manager("Jane");
+            let fred = new Manager("Fred");
+            jane.calcSalary();
+            fred.takeHoliday();
+            jane.promote(dave);
+            fred.downsize(dave);
+        }
+    </script>
+</head>
+<body onload="demo()">
+<h1>Declaring Classes</h1>
+<div id="content"></div>
+</body>
+</html>
+

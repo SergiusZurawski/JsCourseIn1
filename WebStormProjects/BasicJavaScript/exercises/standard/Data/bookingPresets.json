@@ -1,0 +1,16 @@
+{
+  "date" : "01/02/2012",
+  "time" : "09:30 AM",
+  "centers": [
+	{"name":"Belfast", "code":"BFST"},
+	{"name":"Antrim", "code":"ATRM"},
+        {"name":"Ballymena", "code":"BMNA"},
+        {"name":"Derry", "code":"DRRY"},
+        {"name":"Belcoo", "code":"BLCO"},
+        {"name":"Sligo", "code":"SLGO"},
+        {"name":"Galway", "code":"GLWY"},
+        {"name":"Drogheda", "code":"DRDA"},
+        {"name":"Cork", "code":"CORK"},
+        {"name":"Dublin", "code":"DBLN"}
+  ]
+}

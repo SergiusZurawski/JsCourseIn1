@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JavaScript Exercises and Solutions</title>
+    </head>
+    <body>
+        <h1>JavaScript Exercises and Solutions</h1>
+        <h2>Exercises</h2>
+        <h3>Palindromes</h3>
+        <p>
+            Examine the file <a href="StartupFiles/palindromes.html">palindromes.html</a>. Complete
+            the function 'isAPalindrome' so it correctly determines if the input is a palindrome.
+        </p>
+        <h3>Object Orientation</h3>
+        <p>
+            Examine the file <a href="StartupFiles/OO.html">OO.html</a>. Create a student type such
+            that the code within will execute successfully.
+        </p>
+        <h3>A Functional Programming Challenge</h3>
+        <p>
+            Examine the file <a href="StartupFiles/fp.html">fp.html</a>. Complete the function
+            <i>buildShapePrinter</i> so that when called it returns a function that builds the specified
+            type of shape with the specified dimension(s). <b>Hint:</b> wrap the output in a 'pre' element
+            do avoid the browser styling your output.
+        </p>
+        <h3>Using the 'Functional Toolkit' Via Underscore.js</h3>
+        <p>
+            Examine the file <a href="StartupFiles/usingUnderscore.html">usingUnderscore.html</a>. Complete
+            the code such that empty text boxes have the corresponding labels turned red and submission of the 
+            form is canceled (run the solution to see this working). Try to use the functional toolkit instead of 
+            your own loops and conditionals.
+        </p>
+        <h3>Writing Tests Using Jasmine</h3>
+        <p>
+            Examine the following files:
+        </p>
+        <ul>
+            <li><a href="StartupFiles/testingType.js">testingType.js</a></li>
+            <li><a href="StartupFiles/testingSpec.js">testingSpec.js</a></li>
+            <li><a href="Frameworks/jasmine/SpecRunnerBegin.html">SpecRunnerBegin.html</a></li>
+        </ul>
+        <p>
+            These define a JavaScript type to represent a cell from the <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Game Of Life</a>,
+            a skeleton test to ensure that the type works correctly and a page to launch the test in Jasmine. Complete the test so that all behaviours are verified.
+        </p>
+        <h3>Extending the SCJP Quiz Part I</h3>
+        <p>
+            Examine the file <a href="StartupFiles/quiz.html">quiz.html</a> which
+            contains sample questions for the SCJP exam. The first question contains an
+            extra link inviting the user to view information about the correct answer. Attach an event handler
+            to this link so that when it is clicked an extra paragraph is dynamically added at the bottom of
+            the question. The default behavior of the link should be canceled.
+        </p>
+        <h3>Extending the SCJP Quiz Part II</h3>
+        <p>
+            Make a copy of your solution to the previous exercise and then extend it to work with the first
+            four questions. Store the extra information to be added in a JSON-like data structure.
+        </p>
+        <h3>Extending the SCJP Quiz Part III</h3>
+        <p>
+            Make a copy of your solution to the previous exercise and then extend it so that the text for extra
+            information is being retrieved from the server asynchronously. Assume we need to refresh the data every
+            time extra info is requested.
+        </p>
+        <h3>Extending the SCJP Quiz Part IV</h3>
+        <p>
+            Create a form for booking a date and time to take the SCJP, similar to the one in the sample 
+            solution. Add code to validate the form on submission. Note that:
+        </p>
+        <ol>
+            <li>The selection box must be populated via AJAX from 'data/testingCentres.json'</li>
+            <li>The users candidate number should be checked against a regex.</li>
+        </ol>
+        <h3>Extending the SCJP Quiz Part V</h3>
+        <p>
+            Using the form developed in the previous exercise write code to:
+        </p>
+        <ol>
+            <li>Preset the remaining elements of the form via 'Data/bookingPresets.json'</li>
+            <li>Submit the form asynchronously by POST'ing the parameters to a Servlet</li>
+        </ol>
+        <h2>Solutions</h2>
+        <ol>
+            <li>
+                Palindromes
+                &nbsp;<a href="Solutions/palindromesV1.html">solution 1</a>
+                &nbsp;<a href="Solutions/palindromesV2.html">solution 2</a>
+            </li>
+            <li>
+                Object Orientation&nbsp;
+                <a href="Solutions/OOV1.html">version 1</a>&nbsp;
+                <a href="Solutions/OOV2.html">version 2</a>
+            </li>
+            <li>
+                A functional programming challenge&nbsp;
+                <a href="Solutions/fpV1.html">version 1</a>&nbsp;
+                <a href="Solutions/fpV2.html">version 2</a>
+            <li>
+                Using the 'Functional Toolkit' Via Underscore.js
+                <ul>
+                    <li><a href='Solutions/usingUnderscore.html'>good solution</a></li>
+                    <li><a href='Solutions/usingUnderscoreConcise.html'>compressed solution (not recommended!)</a></li>
+                    <li><a href='Solutions/usingUnderscorePartition.html'>an improved solution using 'partition'</a></li>
+                    <li><a href='Solutions/usingUnderscoreChain.html'>an improved solution using 'chain'</a></li>
+                </ul>
+            <li>
+                <a href="Frameworks/jasmine/SpecRunnerEnd.html">Writing tests in Jasmine</a>
+            </li>
+            <li><a href="Solutions/quizPt1.html">Extending the SCJP Quiz Part I</a></li>
+            <li>
+                Extending the SCJP Quiz Part II
+                <ul>
+                    <li><a href="Solutions/quizPt2a.html">First attempt (limited scalability)</a></li>
+                    <li><a href="Solutions/quizPt2b.html">Second attempt (better but buggy)</a></li>
+                    <li><a href="Solutions/quizPt2c.html">Third attempt (bug fixed)</a></li>
+                    <li><a href="Solutions/quizPt2d.html">Fourth attempt (external loops removed)</a></li>
+                </ul>
+            </li>
+            <li><a href="Solutions/quizPt3.html">Extending the SCJP Quiz Part III</a></li>
+            <li><a href="Solutions/testBookingV1.html">Extending the SCJP Quiz Part IV</a></li>
+            <li><a href="Solutions/testBookingV2.html">Extending the SCJP Quiz Part V</a></li>
+        </ol>
+    </body>
+</html>

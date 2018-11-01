@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ES6</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css">
+    <!-- Babel Transcompiler - in the real world you would use webpack
+         or other build tool to transcompile your ES6, JSX etc... -->
+    <script src="babel-standalone/babel.js"></script>
+    <script>
+        function printTitle(title) {
+            var content = document.getElementById("content");
+            var newNode = document.createElement("h3");
+            newNode.appendChild(document.createTextNode(title));
+            content.appendChild(newNode);
+        }
+        function print(text) {
+            var content = document.getElementById("content");
+            var newNode = document.createElement("output");
+            newNode.appendChild(document.createTextNode(text));
+            content.appendChild(newNode);
+        }
+    </script>
+    <script type="text/babel" data-presets="es2016,stage-2">
+        function demo() {
+            // A simple promise
+            let promise = new Promise((resolve, reject) => {
+                print("DEBUG: About to start really long calculation");
+                setTimeout(() => resolve(42), 5000);
+                print("DEBUG: I'll get the answer back to you soon");
+            });
+            promise.then(val => print(`RESULT A: Really long calculation returned ${val}`));
+
+
+            // Returning a promise from a function
+            function fetchThatThing() {
+                print("DEBUG: Let me fetch that thing for you");
+                let promise = new Promise((resolve, reject) => {
+                    setTimeout(() => resolve("ThatThing"), 1000);
+                });
+                print("DEBUG: I'll let you know when I have it");
+                return promise;
+            }
+            fetchThatThing().then((thing) => print(`RESULT B: I got ${thing}`));
+
+            // A promise that fails
+            let failingPromise = new Promise((resolve, reject) => reject("Earth has been demolished."));
+            failingPromise.then(() => print("RESULT C: this will not be called"))
+                          .catch((reason) => print(`FAIL C: ${reason}`));
+
+
+            // A list of promises
+            let promise1 = Promise.resolve(42);
+            let promise2 = "so long";
+            let promise3 = new Promise((resolve, reject) => setTimeout(() => resolve("and thanks for all the fish"), 3000));
+            Promise.all([promise1, promise2, promise3]).then((values) => print("RESULT D: " + values));
+
+
+            // A promise race
+            let promise4 = new Promise((resolve, reject) => setTimeout(() => resolve("RESULT E: Promise 4 is TOO SLOW"), 500));
+            let promise5 = new Promise((resolve, reject) => setTimeout(() => resolve("RESULT E: Promise 5 WINS !!"), 200));
+            Promise.race([promise4, promise5]).then((winner) => print(winner));
+        }
+    </script>
+</head>
+<body onload="demo()">
+    <h1>Using Promises</h1>
+    <div id="content"></div>
+</body>
+</html>
+

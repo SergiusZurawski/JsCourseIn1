@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    canvas {
+        background: white;
+        width: 100vmax;
+        height: 100vmax;
+    }
+</style>
+<body>
+
+<div>
+    <canvas id="graphics" width="1000" height="1000"></canvas>
+</div>
+<div>
+    <input width="500" id="shapes" type="range" value="100" min="20" max="200" onchange="updateShapes()">
+</div>
+
+</body>
+<script>
+    const canvas = document.getElementById("graphics");
+    const shapeSlider = document.getElementById("shapes");
+
+    class Circle {
+        constructor(radius, x, y, color, speedX, speedY) {
+            this.radius = radius;
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            this.directionX = speedX;
+            this.directionY = speedY;
+        }
+
+        draw(ctx) {
+            ctx.beginPath();
+            ctx.fillStyle = this.color;
+            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            ctx.stroke();
+        }
+
+        update() {
+            this.x += this.directionX;
+            this.y += this.directionY;
+
+            if (this.x > canvas.width - this.radius || this.x < this.radius) {
+                this.directionX = -this.directionX;
+            }
+
+            if (this.y > canvas.width - this.radius || this.y < this.radius) {
+                this.directionY = -this.directionY;
+            }
+        }
+    }
+
+    class GraphicsArea {
+        constructor() {
+            this.ctx = canvas.getContext("2d");
+            this.shapes = [];
+            this.interval = setInterval(() => this.draw(), 100);
+        }
+
+        addShape(shape) {
+            this.shapes.push(shape);
+        }
+
+        setShapes(shapes) {
+            this.shapes = shapes;
+        }
+
+        draw() {
+            this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let shape of this.shapes) {
+                shape.update();
+                shape.draw(this.ctx);
+            }
+        }
+    }
+
+    function random(min, max) {
+        return min + Math.random() * (max - min);
+    }
+
+    const colors = ["red", "yellow", "green", "blue", "purple", "orange", "pink"];
+    const graphics = new GraphicsArea();
+    let shapes = new Array(200).fill(null).map(() => new Circle(
+        random(5, 10),
+        random(10, 500),
+        random(10, 500),
+        colors[Math.floor(random(0, colors.length))],
+        random(-20, 20),
+        random(-20, 20))
+    );
+
+    function updateShapes() {
+        const activeShapes = shapes.slice(0, shapeSlider.value);
+        console.log(shapeSlider.value);
+        graphics.setShapes(activeShapes);
+    }
+
+    updateShapes();
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

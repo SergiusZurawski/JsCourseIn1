@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ES6</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css">
+    <!-- Babel Transcompiler - in the real world you would use webpack
+         or other build tool to transcompile your ES6, JSX etc... -->
+    <script src="babel-standalone/babel.js"></script>
+    <script>
+        function printTitle(title) {
+            var content = document.getElementById("content");
+            var newNode = document.createElement("h3");
+            newNode.appendChild(document.createTextNode(title));
+            content.appendChild(newNode);
+        }
+        function print(text) {
+            var content = document.getElementById("content");
+            var newNode = document.createElement("output");
+            newNode.appendChild(document.createTextNode(text));
+            content.appendChild(newNode);
+        }
+    </script>
+    <script type="text/babel" data-presets="es2016,stage-2">
+        function demo() {
+            if (true) {
+                let life = 42;
+                print("The meaning of life is " + life);
+                print("Current status is " + status);
+            }
+            var status = "RED";
+
+            try {
+                print("Like I said, the meaning of life is " + life);
+            }
+            catch (ReferenceError) {
+                print("I have no idea what the meaning of life is");
+            }
+            finally {
+                currentStatus();
+            }
+            function currentStatus() {
+                print("At least I know the current status is " + status);
+            }
+        }
+    </script>
+</head>
+<body onload="demo()">
+    <h1>Block Scope</h1>
+    <div id="content"></div>
+</body>
+</html>
+
